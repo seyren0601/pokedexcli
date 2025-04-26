@@ -60,7 +60,7 @@ type exploreAPIResponse struct {
 }
 
 func GetLocationPokemons(location string) ([]string, error) {
-	url := BASE_URL + location
+	url := BASE_URL + "/location/" + location
 	var data []byte
 	data, found := cache.Get(url) // Find data in cache first
 	if !found {

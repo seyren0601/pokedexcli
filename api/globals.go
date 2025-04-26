@@ -7,6 +7,7 @@ import (
 )
 
 var Cfg config = config{
-	Next: BASE_URL,
+	Next: BASE_URL + "/location",
 }
 var cache pokecache.Cache = pokecache.NewCache(5 * time.Second)
+var catchedPokemons map[string]Pokemon = map[string]Pokemon{}

@@ -11,13 +11,13 @@ type cacheEntry struct {
 }
 
 type Cache struct {
-	caches map[string]cacheEntry
+	caches map[string]*cacheEntry
 	mu     *sync.RWMutex
 	ticker time.Ticker
 }
 
 func (c Cache) Add(key string, value []byte) {
-	newCache := cacheEntry{
+	newCache := &cacheEntry{
 		createdAt: time.Now(),
 		val:       value,
 	}
@@ -31,6 +31,8 @@ func (c Cache) Get(key string) ([]byte, bool) {
 	c.mu.RLock()
 	defer c.mu.RUnlock()
 	if entry, ok := c.caches[key]; ok {
+		// Refresh entry creation time
+		entry.createdAt = time.Now()
 		return entry.val, true
 	}
 
@@ -52,7 +54,7 @@ func (c Cache) reapLoop(duration time.Duration) {
 
 func NewCache(duration time.Duration) Cache {
 	cache := Cache{
-		caches: map[string]cacheEntry{},
+		caches: map[string]*cacheEntry{},
 		mu:     &sync.RWMutex{},
 		ticker: *time.NewTicker(duration),
 	}

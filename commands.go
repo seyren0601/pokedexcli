@@ -43,6 +43,11 @@ func InitCommandList() {
 			description: "Displays the pokemon list of given location",
 			callback:    commandExplore,
 		},
+		"catch": {
+			name:        "catch",
+			description: "Tries to catch a specified pokemon",
+			callback:    commandCatch,
+		},
 	}
 }
 
@@ -119,7 +124,7 @@ func commandMapb(parameters []string) error {
 
 func commandExplore(parameters []string) error {
 	if len(parameters) != 1 {
-		return errors.New("this command take 1 parameter")
+		return errors.New("this command takes 1 parameter")
 	}
 	location := parameters[0]
 
@@ -130,6 +135,26 @@ func commandExplore(parameters []string) error {
 
 	for _, pokemon := range pokemons {
 		fmt.Printf("%s\n", pokemon)
+	}
+
+	return nil
+}
+
+func commandCatch(parameters []string) error {
+	if len(parameters) != 1 {
+		return errors.New("this command takes 1 parameter")
+	}
+	pokemonName := parameters[0]
+
+	successful, err := api.Catch(pokemonName)
+	if err != nil {
+		return err
+	}
+
+	if successful {
+		fmt.Printf("%s was caught!\n", pokemonName)
+	} else {
+		fmt.Printf("%s escaped!\n", pokemonName)
 	}
 
 	return nil
