@@ -4,9 +4,6 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
-	"time"
-
-	"github.com/seyren0601/pokedexcli/internal/pokecache"
 )
 
 type MapArea struct {
@@ -25,11 +22,6 @@ type config struct {
 	Next     string
 	Previous string
 }
-
-var Cfg config = config{
-	Next: "https://pokeapi.co/api/v2/location-area/", //
-}
-var cache pokecache.Cache = pokecache.NewCache(5 * time.Second)
 
 func GetMapAreas(url string) ([]MapArea, error) {
 	var data []byte
