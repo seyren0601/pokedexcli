@@ -27,6 +27,11 @@ func Inspect(pokemonName string) error {
 			}
 		}
 
+		var types string = ""
+		for _, t := range pokemon.Types {
+			types += fmt.Sprintf("\t- %s\n", t.Type.Name)
+		}
+
 		fmt.Printf(`Name: %s,
 Height: %v,
 Weight: %v,
@@ -37,7 +42,8 @@ Stats:
 	-special-attack: %v
 	-special-defense: %v
 	-speed: %v
-`, pokemon.Name, pokemon.Height, pokemon.Weight, hp, attack, defense, specialAtk, specialDef, speed)
+Types:
+%s`, pokemon.Name, pokemon.Height, pokemon.Weight, hp, attack, defense, specialAtk, specialDef, speed, types)
 	}
 
 	return nil
