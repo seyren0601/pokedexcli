@@ -53,6 +53,11 @@ func InitCommandList() {
 			description: "Inspect a registered pokemon",
 			callback:    commandInspect,
 		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Display all catched pokemons in pokedex",
+			callback:    commandPokedex,
+		},
 	}
 }
 
@@ -172,6 +177,19 @@ func commandInspect(parameters []string) error {
 	pokemonName := parameters[0]
 
 	err := api.Inspect(pokemonName)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func commandPokedex(parameters []string) error {
+	if len(parameters) > 0 {
+		return errors.New("this command doesn't take parameters")
+	}
+
+	err := api.Pokedex()
 	if err != nil {
 		return err
 	}

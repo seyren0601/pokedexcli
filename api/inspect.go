@@ -33,8 +33,8 @@ func Inspect(pokemonName string) error {
 		}
 
 		fmt.Printf(`Name: %s,
-Height: %v,
-Weight: %v,
+Height: %v
+Weight: %v
 Stats:
 	-hp: %v
 	-attack: %v
