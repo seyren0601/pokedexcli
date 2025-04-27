@@ -48,6 +48,11 @@ func InitCommandList() {
 			description: "Tries to catch a specified pokemon",
 			callback:    commandCatch,
 		},
+		"inspect": {
+			name:        "inspect",
+			description: "Inspect a registered pokemon",
+			callback:    commandInspect,
+		},
 	}
 }
 
@@ -155,6 +160,20 @@ func commandCatch(parameters []string) error {
 		fmt.Printf("%s was caught!\n", pokemonName)
 	} else {
 		fmt.Printf("%s escaped!\n", pokemonName)
+	}
+
+	return nil
+}
+
+func commandInspect(parameters []string) error {
+	if len(parameters) != 1 {
+		return errors.New("this command takes 1 parameter")
+	}
+	pokemonName := parameters[0]
+
+	err := api.Inspect(pokemonName)
+	if err != nil {
+		return err
 	}
 
 	return nil
